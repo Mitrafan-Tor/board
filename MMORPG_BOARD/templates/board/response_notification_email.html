@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Новый отклик</title>
+</head>
+<body>
+    <h2>Новый отклик на ваше объявление</h2>
+    <p>Вы получили новый отклик на объявление: <strong>{{ response.advertisement.title }}</strong></p>
+    <p><strong>От пользователя:</strong> {{ response.author.username }}</p>
+    <p><strong>Сообщение:</strong></p>
+    <p>{{ response.content }}</p>
+    <p>
+        <a href="{{ protocol }}://{{ domain }}{% url 'private_page' %}">
+            Перейти к управлению откликами
+        </a>
+    </p>
+</body>
+</html>

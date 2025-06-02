@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ ad.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="ad-detail">
+        <div class="ad-header">
+            <h1>{{ ad.title }}</h1>
+            <span class="category">{{ ad.category.get_name_display }}</span>
+        </div>
+        
+        <div class="ad-author">
+            Разместил(а) {{ ad.author.username }} от {{ ad.created_at|date:"M d, Y" }}
+            {% if user == ad.author %}
+                <div class="ad-actions">
+                    <a href="{% url 'ad_edit' ad.pk %}" class="btn-edit">Редактировать</a>
+                    <a href="{% url 'ad_delete' ad.pk %}" class="btn-delete">Удалить</a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="ad-content">
+            <p>{{ ad.content }}</p>
+            
+            {% if ad.image %}
+                <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="ad-image">
+            {% endif %}
+            
+            {% if ad.video %}
+                <video controls class="ad-video">
+                    <source src="{{ ad.video.url }}" type="video/mp4">
+                    Ваш браузер не поддерживает тег видео.
+                </video>
+            {% endif %}
+        </div>
+        
+        <div class="ad-responses">
+            <h2>Ответы ({{ ad.responses.count }})</h2>
+            
+            {% if response_form %}
+            <form method="post" action="{% url 'create_response' ad.pk %}">
+                {% csrf_token %}
+                {{ response_form.as_p }}
+                <button type="submit" class="btn btn-primary">Отправить отклик</button>
+            </form>
+            {% endif %}
+            
+            {% for response in responses %}
+                <div class="response">
+                    <div class="response-header">
+                        <span class="response-author">{{ response.author.username }}</span>
+                        <span class="response-date">{{ response.created_at|date:"M d, Y H:i" }}</span>
+                    </div>
+                    <div class="response-content">
+                        <p>{{ response.content }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Пока нет ответов.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

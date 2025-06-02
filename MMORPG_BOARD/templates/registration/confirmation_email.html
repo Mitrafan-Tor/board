@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Подтверждение регистрации</title>
+</head>
+<body>
+    <h2>Подтверждение регистрации</h2>
+    <p>Здравствуйте, {{ user.username }}!</p>
+    <p>Для завершения регистрации на MMORPG Board перейдите по ссылке:</p>
+    <p>
+        <a href="{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}">
+            Подтвердить email
+        </a>
+    </p>
+    <p>Если вы не регистрировались на нашем сайте, проигнорируйте это письмо.</p>
+</body>
+</html>

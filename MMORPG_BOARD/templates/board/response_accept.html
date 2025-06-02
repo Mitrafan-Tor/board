@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Принять отклик{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Принять отклик</h1>
+    <p>Вы уверены, что хотите принять этот отклик?</p>
+    <div class="response-preview">
+        <p><strong>Автор:</strong> {{ response.author.username }}</p>
+        <p><strong>Дата:</strong> {{ response.created_at|date:"d.m.Y H:i" }}</p>
+        <p><strong>Содержание:</strong> {{ response.content }}</p>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn-accept">Да, принять</button>
+        <a href="{% url 'private_page' %}" class="btn-cancel">Отмена</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ваш отклик принят</title>
+</head>
+<body>
+    <h2>Ваш отклик был принят!</h2>
+    <p>Автор объявления <strong>{{ response.advertisement.title }}</strong> принял ваш отклик.</p>
+    <p><strong>Ваше сообщение:</strong></p>
+    <p>{{ response.content }}</p>
+    <p>
+        <a href="{{ protocol }}://{{ domain }}{{ response.advertisement.get_absolute_url }}">
+            Перейти к объявлению
+        </a>
+    </p>
+</body>
+</html>

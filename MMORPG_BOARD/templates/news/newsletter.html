@@ -1,0 +1,18 @@
+<h2>Добрый день, {{ user.username }}!</h2>
+<p>За последнюю неделю появилось {{ latest_ads.count }} новых объявлений:</p>
+
+<ul>
+    {% for ad in latest_ads %}
+    <li>
+        <a href="http://{{ domain }}{% url 'ad_detail' ad.pk %}">
+            {{ ad.title }} ({{ ad.category.get_name_display }})
+        </a>
+        <p>{{ ad.content|truncatewords:15 }}</p>
+    </li>
+    {% endfor %}
+</ul>
+
+<hr>
+<small>
+    <a href="http://{{ domain }}{% url 'unsubscribe' %}">Отписаться от рассылки</a>
+</small>

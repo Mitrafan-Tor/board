@@ -1,0 +1,61 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Database
+#*.sqlite3
+#*.db
+
+# Static files at development
+/static_collected/
+
+# Logs
+*.log
+logs/
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+[Tt]humbs.db. i d e a /
+
+# Celery Beat files
+celerybeat-schedule*
+*.shm
+*.wal
+
+cache_files/*
+!cache_files/.gitkeep
+
+general.log
+errors.log
+security.log
+
+media/ads_images/*
+!media/ads_images/.gitkeep
+
+media/ads_videos/*
+!media/ads_videos/.gitkeep
