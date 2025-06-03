@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="unsubscribe-container">
+    <h1 class="unsubscribe-title">Отписаться от рассылки</h1>
+    <p class="unsubscribe-message">Вы уверены, что хотите прекратить получать наши еженедельные новости и обновления?</p>
+
+    <form method="post" class="unsubscribe-form">
+        {% csrf_token %}
+        <div class="unsubscribe-buttons">
+            <button type="submit" class="btn-unsubscribe">Да, отписаться</button>
+            <a href="/" class="btn-cancel-unsubscribe">Нет, остаться</a>
+        </div>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="unsubscribe-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

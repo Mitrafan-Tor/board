@@ -12,14 +12,13 @@ app = Celery('MMORPG_BOARD')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Автоматическое обнаружение задач во всех приложениях Django
-app.autodiscover_tasks() #(lambda: settings.INSTALLED_APPS)
-# app.autodiscover_tasks(['board'], force=True)  # force=True для принудительной перезагрузки
+app.autodiscover_tasks()
 
 # Расписание для периодических задач
 app.conf.beat_schedule = {
     'newsletter': {
         'task': 'board.tasks.send_weekly_newsletter',
-        'schedule': crontab(hour=1, minute=52, day_of_week=2),
+        'schedule': crontab(hour=1, minute=24, day_of_week='Wednesday'),
         'options': {
             'expires': 60 * 60 * 24,  # Задача истекает через 24 часа
         },

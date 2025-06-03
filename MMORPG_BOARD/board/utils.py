@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
-from .models import Advertisement
+
 
 def send_response_notification(response):
     """Отправка уведомления о новом отклике"""

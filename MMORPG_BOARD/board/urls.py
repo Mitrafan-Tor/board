@@ -3,7 +3,7 @@ from .views import (
     AdvertisementListView, AdvertisementDetailView, AdvertisementCreateView,
     AdvertisementUpdateView, AdvertisementDeleteView, create_response,
     private_page, accept_response, delete_response, NewsletterCreateView,
-    RegisterView, activate_account
+    RegisterView, activate_account, unsubscribe
 )
 
 urlpatterns = [
@@ -19,4 +19,5 @@ urlpatterns = [
     path('newsletter/', NewsletterCreateView.as_view(), name='newsletter'),
     path('register/', RegisterView.as_view(), name='register'),
     path('activate/<uidb64>/<token>/', activate_account, name='activate'),
+    path('unsubscribe/', unsubscribe, name='unsubscribe'),
 ]

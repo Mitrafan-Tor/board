@@ -8,13 +8,13 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.db.models import Q
-from .models import Advertisement, Response, Category, Newsletter
-from .forms import AdvertisementForm, ResponseForm, NewsletterForm
 from django.contrib.auth.models import User
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from .registration import send_confirmation_email
 from .forms import CustomUserCreationForm
+from .models import Advertisement, Response, Category, Newsletter
+from .forms import AdvertisementForm, ResponseForm, NewsletterForm
 
 
 class AdvertisementListView(ListView):
@@ -73,7 +73,7 @@ class AdvertisementCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        messages.success(self.request, 'Your advertisement has been created!')
+        messages.success(self.request, 'Ваше объявление создано!')
         return reverse_lazy('ad_detail', kwargs={'pk': self.object.pk})
 
 
@@ -91,7 +91,7 @@ class AdvertisementUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
         return self.request.user == ad.author
 
     def get_success_url(self):
-        messages.success(self.request, 'Your advertisement has been updated!')
+        messages.success(self.request, 'Ваше объявление обновлено!')
         return reverse_lazy('ad_detail', kwargs={'pk': self.object.pk})
 
 
@@ -105,7 +105,7 @@ class AdvertisementDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteVie
         return self.request.user == ad.author
 
     def delete(self, request, *args, **kwargs):
-        messages.success(request, 'Your advertisement has been deleted!')
+        messages.success(request, 'Ваше объявление удалено!')
         return super().delete(request, *args, **kwargs)
 
 
@@ -209,11 +209,11 @@ def delete_response(request, pk):
     response = get_object_or_404(Response, pk=pk)
 
     if request.user != response.advertisement.author:
-        messages.error(request, "You don't have permission to delete this response.")
+        messages.error(request, "У вас нет прав на удаление этого ответа.")
         return redirect('private_page.html')
 
     response.delete()
-    messages.success(request, 'Response has been deleted!')
+    messages.success(request, 'Ответ был удален.!')
     return redirect('private_page.html')
 
 
@@ -227,7 +227,7 @@ class NewsletterCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return self.request.user.is_superuser
 
     def form_valid(self, form):
-        messages.success(self.request, 'Newsletter has been scheduled for sending.')
+        messages.success(self.request, 'Отправка информационного бюллетеня запланирована.')
         return super().form_valid(form)
 
 
@@ -268,3 +268,16 @@ def activate_account(request, uidb64, token):
     else:
         messages.error(request, 'Ссылка активации недействительна!')
         return redirect('ad_list')
+
+
+@login_required
+def unsubscribe(request):
+    if request.method == 'POST':
+        # Пример: отключаем рассылку в профиле пользователя
+        request.user.profile.email_newsletter = False
+        request.user.profile.save()
+
+        messages.success(request, 'Вы отписались от рассылки.')
+        return redirect('')  # Перенаправляем на главную
+
+    return render(request, 'news/unsubscribe.html')

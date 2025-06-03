@@ -2,12 +2,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
 from django.conf import settings
-from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 from .models import Response, Newsletter
-from .tasks import send_newsletter
+from .tasks import send_weekly_newsletter
 
 
 @receiver(post_save, sender=Response)
@@ -33,4 +32,4 @@ def notify_ad_author(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Newsletter)
 def schedule_newsletter(sender, instance, created, **kwargs):
     if created:
-        send_newsletter.delay(instance.id)
+        send_weekly_newsletter.delay(instance.id)
