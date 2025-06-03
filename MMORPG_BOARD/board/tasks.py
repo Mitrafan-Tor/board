@@ -6,6 +6,13 @@ from django.template.loader import render_to_string
 
 User = get_user_model()
 
+import time
+
+@shared_task
+def hello():
+    time.sleep(10)
+    print("Hello, world!")
+
 
 @shared_task
 def send_weekly_newsletter():
@@ -26,6 +33,9 @@ def send_weekly_newsletter():
         )
 
 
-@shared_task
+
+
+@shared_task(name='board.tasks.test')  # Явное указание имени задачи
 def test():
-    return "Celery работает!"
+    print("Тестовая задача выполняется!")
+    return "Тестовая задача выполнена!"

@@ -220,7 +220,7 @@ def delete_response(request, pk):
 class NewsletterCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Newsletter
     form_class = NewsletterForm
-    template_name = 'static/newsletter.html'
+    template_name = 'news/newsletter.html'
     success_url = reverse_lazy('ad_list')
 
     def test_func(self):

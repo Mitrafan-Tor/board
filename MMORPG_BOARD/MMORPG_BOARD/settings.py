@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django_apscheduler',
+
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,10 @@ CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_TIMEZONE = 'Europe/Samara'
 CELERY_TASK_SERIALIZER = 'json'
+
+# CELERY_BROKER_URL = 'filesystem://'
+# CELERY_BROKER_TRANSPORT_OPTIONS = {
+#     'data_folder_in': './broker/out',
+#     'data_folder_out': './broker/out',
+#     'data_folder_processed': './broker/processed'
+# }
